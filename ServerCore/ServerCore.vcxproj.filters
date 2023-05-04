@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{d97a3674-8f1b-4dd8-8e2a-434f60d28cb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network">
+      <UniqueIdentifier>{7867bbb1-a670-40f0-80c8-c4627543f484}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lock">
+      <UniqueIdentifier>{b3e4f5ee-fa0e-4134-a184-9398c5043f5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lock\SpinLock">
+      <UniqueIdentifier>{58ec2b9a-1f35-4dae-88d4-de3ee5591fb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lock\Sleep">
+      <UniqueIdentifier>{a3e2b48b-1ecf-439e-a65c-ef783b085b97}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="CorePch.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Types.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="CSpinLock.h">
+      <Filter>Lock\SpinLock</Filter>
+    </ClInclude>
+    <ClInclude Include="CSleep.h">
+      <Filter>Lock\Sleep</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="CorePch.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="CSpinLock.cpp">
+      <Filter>Lock\SpinLock</Filter>
+    </ClCompile>
+    <ClCompile Include="CSleep.cpp">
+      <Filter>Lock\Sleep</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
