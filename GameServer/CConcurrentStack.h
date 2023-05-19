@@ -175,3 +175,130 @@ public:
 		}
 	}
 };
+
+//template<typename T>
+//class LockFreeStackV2
+//{
+//	struct Node {
+//		Node(const T& value) : data(make_shared<T>(value)), next(nullptr)
+//		{
+//
+//		}
+//
+//		shared_ptr<T> data;
+//		shared_ptr<Node> next;
+//	};
+//
+//private:
+//	shared_ptr<Node> m_aHead;
+//
+//public:
+//	void Push(const T& _value) {
+//		shared_ptr<Node> node = make_shared<Node>(_value);
+//		node->next = atomic_load(&m_aHead);		
+//
+//		while (atomic_compare_exchange_weak(&m_aHead, &node->next, node) == false) {
+//		}
+//	}
+//
+//	shared_ptr<T> TryPop() {
+//		shared_ptr<Node> oldHead = atomic_load(&m_aHead);
+//
+//		while (oldHead && atomic_compare_exchange_weak(&m_aHead, &oldHead, oldHead->next) == false) {
+//
+//		}
+//
+//		if (oldHead == nullptr)
+//			return shared_ptr<T>();
+//
+//		return oldHead->data;
+//	}
+//
+//};
+
+template<typename T>
+class LockFreeStackV2
+{
+	struct Node;
+
+	struct CountedNodePtr {
+		int32 externalCount = 0;
+		Node* ptr = nullptr;
+	};
+
+	struct Node {
+		Node(const T& value) : data(make_shared<T>(value))
+		{
+
+		}
+
+		shared_ptr<T> data;
+		atomic<int32> internalCount = 0;
+		CountedNodePtr next;
+	};
+
+private:
+	atomic<CountedNodePtr> m_aHead;
+
+public:
+	void Push(const T& _value) {
+		CountedNodePtr node;
+		node.ptr = new Node(_value);
+		node.externalCount = 1;
+		//여기까진 아무 상관 없음
+		node.ptr->next = m_aHead;
+		while (m_aHead.compare_exchange_weak(node.ptr->next, node) == false) {
+
+		}
+
+	}
+
+	shared_ptr<T> TryPop() {
+		CountedNodePtr oldHead = m_aHead;
+		while (true) {
+			//Head 의 참조 권한을 가져와야함.
+			//Head의 참조 숫자를 하나 증가시켜야함.
+			//증가시키는 쓰레드만이 권한 획득 가능
+			//참조권 획득(externalCount를 현 시점기준 +1 한 애가 이김)
+			IncreaseHeadCount(oldHead);
+			//최소한 externalCount >=2일테니  삭제x(안전하게 접근할 수 있는)
+			Node* ptr = oldHead.ptr;
+
+			//데이터 없음
+			if (ptr == nullptr)
+				return shared_ptr<T>();
+
+			//이제 찐으로 삭제하기 위한 소유권을 획득해야함.
+			//소유권 획득(ptr->next로 head를 바꿔치기 한 애가 이김)
+			//참조권까지 같은 Head를 빼내야함.
+			if (m_aHead.compare_exchange_strong(oldHead, ptr->next)) {
+				shared_ptr<T> res;
+				res.swap(ptr->data);
+
+				//나 말고 또 누가 있는가?
+				const int32 countIncrease = oldHead.externalCount - 2;
+				if (ptr->internalCount.fetch_add(countIncrease) == -countIncrease) 
+					delete ptr;				
+
+				return res;
+			}
+			else if(ptr->internalCount.fetch_sub(1)==1) {
+				//참조권은 얻었으나 소유권은 실패-> 뒷수습은 내가 한다.
+				delete ptr;
+			}
+		}
+	}
+
+private:
+	void IncreaseHeadCount(CountedNodePtr& oldCounter) {
+		while (true) {
+			CountedNodePtr newCounter = oldCounter;
+			newCounter.externalCount++;
+
+			if (m_aHead.compare_exchange_strong(oldCounter, newCounter)) {
+				oldCounter.externalCount = newCounter.externalCount;
+				break;
+			}
+		}
+	}
+};
