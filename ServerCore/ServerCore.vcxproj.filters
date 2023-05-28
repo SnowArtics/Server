@@ -16,36 +16,63 @@
     <Filter Include="Lock\Sleep">
       <UniqueIdentifier>{a3e2b48b-1ecf-439e-a65c-ef783b085b97}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Main">
+      <UniqueIdentifier>{48416e61-c2cf-4e11-85ad-b9e072f23384}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Thread">
+      <UniqueIdentifier>{27fd1fee-0997-4422-8010-2ba0474fa5b7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="CorePch.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Types.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="CSpinLock.h">
       <Filter>Lock\SpinLock</Filter>
     </ClInclude>
     <ClInclude Include="CSleep.h">
       <Filter>Lock\Sleep</Filter>
     </ClInclude>
+    <ClInclude Include="Types.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="CorePch.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="CoreMacro.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="CoreGlobal.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="CoreTLS.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadManager.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="CorePch.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
     <ClCompile Include="CSpinLock.cpp">
       <Filter>Lock\SpinLock</Filter>
     </ClCompile>
     <ClCompile Include="CSleep.cpp">
       <Filter>Lock\Sleep</Filter>
+    </ClCompile>
+    <ClCompile Include="CorePch.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="CoreGlobal.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="CoreTLS.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadManager.cpp">
+      <Filter>Thread</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

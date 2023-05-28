@@ -2,59 +2,30 @@
 //
 #include "pch.h"
 #include <iostream>
-//#include "CorePch.h"
-
 #include <thread>
 #include <atomic>
 #include <mutex>
-
 #include <future>
-
-#include "CConcurrentQueue.h"
-#include "CConcurrentStack.h"
+#include "ThreadManager.h"
 
 using namespace std;
 
-LockQueue<int32> q;
-LockFreeStackV2<int32> s;
+CoreGlobal Core;
 
-void Push() {
-	while (true) {
-		int32 value = rand() % 100;
-		s.Push(value);
-
-		this_thread::sleep_for(1ms);
-	}
-}
-
-void Pop() {
-	while (true) {
-		//int32 data = 0;
-
-		//if (q.TryPop(data))
-		//	cout << data << endl;
-
-		//if(s.TryPop(data))
-		//cout << data << endl;
-
-		auto data = s.TryPop();
-		if (data != nullptr)
-			cout << (*data) << endl;
+void ThreadMain() {
+	while (true)
+	{
+		cout << "Hello! I am Thread..." << LThreadId << endl;
+		this_thread::sleep_for(1s);
 	}
 }
 
 int main()
 {
-	shared_ptr<int32> ptr;
-	bool value = atomic_is_lock_free(&ptr);
-
-	thread t1(Push);
-	thread t2(Pop);
-	thread t3(Pop);
-
-	t1.join();
-	t2.join();
-	t3.join();
+	for (int32 i = 0; i < 5; i++) {
+		GThreadManager->Launch(ThreadMain);
+	}
+	GThreadManager->Join();
 }
 
 

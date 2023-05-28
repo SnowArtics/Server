@@ -48,3 +48,29 @@ public:
 	}
 };
 
+template<typename T>
+class LockFreeQueue {
+	struct Node {
+		shared_ptr<T> data;
+		Node* next = nullptr;
+	};
+
+private:
+	Node* _head = nullptr;
+	Node* _tail = nullptr;
+
+public:
+	LockFreeQueue() : _head(new Node), _tail(_head) {
+
+	}
+
+	LockFreeQueue(const LockFreeQueue&) = delete;
+	LockFreeQueue& operator=(const LockFreeQueue&) = delete;
+
+	void Push(const T& value) {
+		shared_ptr<T> newData = make_shared<T>(value);
+	}
+};
+
+
+
