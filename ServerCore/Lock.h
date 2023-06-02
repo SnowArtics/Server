@@ -30,10 +30,10 @@ private:
 	uint16 _writeCount = 0; //Lock을 잡은 쓰레드가 동일 할 때마다 count 증가
 
 public:
-	void WriteLock();
-	void WriteUnlock();
-	void ReadLock();
-	void ReadUnlock();
+	void WriteLock(const char* name);
+	void WriteUnlock(const char* name);
+	void ReadLock(const char* name);
+	void ReadUnlock(const char* name);
 };
 
 
@@ -46,10 +46,11 @@ class ReadLockGuard
 {
 private:
 	Lock& _lock;
+	const char* _name;
 
 public:
-	ReadLockGuard(Lock& lock) : _lock(lock) { _lock.ReadLock(); }
-	~ReadLockGuard() { _lock.ReadUnlock(); }
+	ReadLockGuard(Lock& lock, const char* name) : _lock(lock), _name(name) { _lock.ReadLock(name); }
+	~ReadLockGuard() { _lock.ReadUnlock(_name); }
 
 };
 
@@ -57,10 +58,11 @@ class WriteLockGuard
 {
 private:
 	Lock& _lock;
+	const char* _name;
 
 public:
-	WriteLockGuard(Lock& lock) : _lock(lock) { _lock.WriteLock(); }
-	~WriteLockGuard() { _lock.WriteUnlock(); }
+	WriteLockGuard(Lock& lock, const char* name) : _lock(lock), _name(name) { _lock.WriteLock(name); }
+	~WriteLockGuard() { _lock.WriteUnlock(_name); }
 
 };
 
