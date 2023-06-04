@@ -16,10 +16,10 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="CConcurrentQueue.cpp">
-      <Filter>Main</Filter>
+      <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="CConcurrentStack.cpp">
-      <Filter>Main</Filter>
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -27,10 +27,10 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="CConcurrentStack.h">
-      <Filter>Main</Filter>
+      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="CConcurrentQueue.h">
-      <Filter>Main</Filter>
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

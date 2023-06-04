@@ -7,70 +7,83 @@
 #include <mutex>
 #include <future>
 #include "ThreadManager.h"
+#include "RefCounting.h"
 
-class TestLock {
-	USE_LOCK;
-
-private:
-	queue<int32> _queue;
-
+class Wraight : public RefCountable
+{
 public:
-	int32 TestRead() {
-		READ_LOCK;
-		if (_queue.empty())
-			return -1;
-
-		return _queue.front();
-	}
-
-	void TestPush() {
-		WRITE_LOCK;
-		_queue.push(rand() % 100);
-	}
-
-	void TestPop(){
-		WRITE_LOCK;
-
-		while(true)
-
-		if (_queue.empty() == false)
-			_queue.pop();
-	}
+	int _hp = 150;
+	int _posX = 0;
+	int _posY = 0;
 };
 
-TestLock testLock;
+using WraightRef = TSharedPtr<Wraight>;
 
-using namespace std;
-
-void ThreadWrite() {
-	while (true)
+class Missile : public RefCountable
+{
+public:
+	void SetTarget(WraightRef target)
 	{
-		testLock.TestPush();
-		this_thread::sleep_for(1ms);
-		testLock.TestPop();
-	}
-}
-
-void ThreadRead() {
-	while (true) {
-		int32 value = testLock.TestRead();
-		cout << value << endl;
-		this_thread::sleep_for(1ms);
+		_target = target;
+		// 중간에 개입 가능
+		//target->AddRef();
 	}
 
-}
+	bool Update()
+	{
+		if (_target == nullptr)
+			return true;
+
+		int posX = _target->_posX;
+		int posY = _target->_posY;
+
+		// TODO : 쫓아간다
+
+		if (_target->_hp == 0)
+		{
+			//_target->ReleaseRef();
+			_target = nullptr;
+			return true;
+		}
+
+		return false;
+	}
+
+	WraightRef _target = nullptr;
+};
+
+using MissileRef = TSharedPtr<Missile>;
 
 int main()
 {
-	for (int32 i = 0; i < 2; i++) {
-		GThreadManager->Launch(ThreadWrite);
+	WraightRef wraight(new Wraight());
+	wraight->ReleaseRef();
+	MissileRef missile(new Missile());
+	missile->ReleaseRef();
+
+	missile->SetTarget(wraight);
+
+	// 레이스가 피격 당함
+	wraight->_hp = 0;
+	//delete wraight;
+	//wraight->ReleaseRef();
+	wraight = nullptr;
+
+	while (true)
+	{
+		if (missile)
+		{
+			if (missile->Update())
+			{
+				//missile->ReleaseRef();
+				missile = nullptr;
+			}
+		}
 	}
 
-	for (int32 i = 0; i < 5; i++) {
-		GThreadManager->Launch(ThreadRead);
-	}
-
-	GThreadManager->Join();
+	//missile->ReleaseRef();
+	missile = nullptr;
+	//delete missile;
 }
 
 
