@@ -2,6 +2,7 @@
 
 //DummyClient, GameServer에서도 참조가 가능하게끔 CorePch를 만듬
 
+#include <iostream>
 #include "Types.h"
 #include "CoreMacro.h"
 #include "CoreTLS.h"
@@ -12,12 +13,11 @@
 #include <queue>
 #include <stack>
 #include <map>
-#include <stack>
+#include <set>
 #include <unordered_map>
 #include <unordered_set>
 
-#include <Windows.h>
-#include <iostream>
+#include <windows.h>
 using namespace std;
 
 #include "Lock.h"
