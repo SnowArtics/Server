@@ -9,6 +9,8 @@
 #include "ThreadManager.h"
 #include "RefCounting.h"
 
+#include "RefCounting.h"
+
 class Wraight : public RefCountable
 {
 public:
@@ -85,5 +87,3 @@ int main()
 	missile = nullptr;
 	//delete missile;
 }
-
-
