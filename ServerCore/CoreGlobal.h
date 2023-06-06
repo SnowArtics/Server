@@ -4,7 +4,8 @@
 //매니저 클래스들의 생성순서랑 삭제순서를
 //맞춰줘야 할 수 있어서 여기서 조절해줌.
 
-extern class ThreadManager* GThreadManager;
+extern class ThreadManager*		GThreadManager;
+extern class Memory*					GMemory;
 
-extern class DeadLockProfiler* GDeadLockProfiler;
+extern class DeadLockProfiler*	GDeadLockProfiler;
 
