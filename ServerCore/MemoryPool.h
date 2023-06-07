@@ -1,10 +1,16 @@
 #pragma once
 
+enum
+{
+	SLIST_ALIGNMENT = 16
+};
+
 /*----------------------------
 |		MemoryHeader
 -------------------------------*/
 
-struct MemoryHeader
+DECLSPEC_ALIGN(SLIST_ALIGNMENT)
+struct MemoryHeader : public SLIST_ENTRY
 {
 	int32 allocSize;
 
@@ -30,14 +36,13 @@ struct MemoryHeader
 |		MemoryPool
 -------------------------------*/
 
+DECLSPEC_ALIGN(SLIST_ALIGNMENT)
 class MemoryPool
 {
 private:
-	int32 _allocSize = 0;	//이 메모리 풀이 관리하는 메모리의 크기
-	atomic<int32> _allocCount = 0;	//이 메모리 풀이 관리하는 메모리의 개수
-
-	USE_LOCK; //Lock을 사용할 것이다.
-	queue<MemoryHeader*> _queue;//_queue에 메모리 풀이 들어가고 나간다.
+	SLIST_HEADER		_header;
+	int32				_allocSize = 0;	//이 메모리 풀이 관리하는 메모리의 크기
+	atomic<int32>		_allocCount = 0;	//이 메모리 풀이 관리하는 메모리의 개수
 
 public:
 	MemoryPool(int32 allocSize);//이 메모리 풀이 담당하는 메모리의 크기를 넣어준다.
