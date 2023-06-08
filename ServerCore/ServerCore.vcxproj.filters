@@ -75,6 +75,9 @@
     <ClInclude Include="MemoryPool.h">
       <Filter>Memory</Filter>
     </ClInclude>
+    <ClInclude Include="ObjectPool.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CSpinLock.cpp">
@@ -114,6 +117,9 @@
       <Filter>Memory</Filter>
     </ClCompile>
     <ClCompile Include="MemoryPool.cpp">
+      <Filter>Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectPool.cpp">
       <Filter>Memory</Filter>
     </ClCompile>
   </ItemGroup>

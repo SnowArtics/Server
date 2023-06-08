@@ -42,7 +42,8 @@ class MemoryPool
 private:
 	SLIST_HEADER		_header;
 	int32				_allocSize = 0;	//이 메모리 풀이 관리하는 메모리의 크기
-	atomic<int32>		_allocCount = 0;	//이 메모리 풀이 관리하는 메모리의 개수
+	atomic<int32>		_useCount = 0;	//이 메모리 풀이 관리하는 메모리의 개수
+	atomic<int32>		_reserveCount = 0;	//이 메모리 풀의 메모리가 사용되는 개수
 
 public:
 	MemoryPool(int32 allocSize);//이 메모리 풀이 담당하는 메모리의 크기를 넣어준다.
