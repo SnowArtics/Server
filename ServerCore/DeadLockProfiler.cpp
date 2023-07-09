@@ -1,30 +1,39 @@
 #include "pch.h"
 #include "DeadLockProfiler.h"
 
+/*--------------------
+	DeadLockProfiler
+---------------------*/
+
 void DeadLockProfiler::PushLock(const char* name)
 {
 	LockGuard guard(_lock);
 
-	//아이디를 찾거나 발급한다.
+	// 아이디를 찾거나 발급한다.
 	int32 lockId = 0;
 
 	auto findIt = _nameToId.find(name);
-	if (findIt == _nameToId.end()) {
+	if (findIt == _nameToId.end())
+	{
 		lockId = static_cast<int32>(_nameToId.size());
 		_nameToId[name] = lockId;
 		_idToName[lockId] = name;
 	}
-	else {
+	else
+	{
 		lockId = findIt->second;
 	}
 
-	//잡고있는락이 있었다면
-	if (_lockStack.empty() == false) {
-		//기존에 발견되지 않은 케이스라면 데드락 여부 다시 확인한다.
+	// 잡고 있는 락이 있었다면
+	if (_lockStack.empty() == false)
+	{
+		// 기존에 발견되지 않은 케이스라면 데드락 여부 다시 확인한다.
 		const int32 prevId = _lockStack.top();
-		if (lockId != prevId) {//똑같은 lock을 2중으로 건게 아니라면
+		if (lockId != prevId)
+		{
 			set<int32>& history = _lockHistory[prevId];
-			if (history.find(lockId) == history.end()) {
+			if (history.find(lockId) == history.end())
+			{
 				history.insert(lockId);
 				CheckCycle();
 			}
@@ -56,11 +65,10 @@ void DeadLockProfiler::CheckCycle()
 	_finished = vector<bool>(lockCount, false);
 	_parent = vector<int32>(lockCount, -1);
 
-	for (int32 lockId = 0; lockId < lockCount; lockId++) {
+	for (int32 lockId = 0; lockId < lockCount; lockId++)
 		Dfs(lockId);
-	}
 
-	//연산이 끝났으면 정리한다.
+	// 연산이 끝났으면 정리한다.
 	_discoveredOrder.clear();
 	_finished.clear();
 	_parent.clear();
@@ -73,17 +81,20 @@ void DeadLockProfiler::Dfs(int32 here)
 
 	_discoveredOrder[here] = _discoveredCount++;
 
-	//모든 인접한 정점을 순회한다.
+	// 모든 인접한 정점을 순회한다.
 	auto findIt = _lockHistory.find(here);
-	if (findIt == _lockHistory.end()) {
+	if (findIt == _lockHistory.end())
+	{
 		_finished[here] = true;
 		return;
 	}
 
 	set<int32>& nextSet = findIt->second;
-	for (int32 there : nextSet) {
-		//아직 방문ㅁ한 적이 없다면 방문한다.
-		if (_discoveredOrder[there] == -1) {
+	for (int32 there : nextSet)
+	{
+		// 아직 방문한 적이 없다면 방문한다.
+		if (_discoveredOrder[there] == -1)
+		{
 			_parent[there] = here;
 			Dfs(there);
 			continue;

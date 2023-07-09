@@ -1,6 +1,4 @@
-﻿// GameServer.cpp : 이 파일에는 'main' 함수가 포함됩니다. 거기서 프로그램 실행이 시작되고 종료됩니다.
-//
-#include "pch.h"
+﻿#include "pch.h"
 #include <iostream>
 #include "CorePch.h"
 #include <atomic>
@@ -9,12 +7,12 @@
 #include <future>
 #include "ThreadManager.h"
 
-#include <WinSock2.h>
-#include <MSWSock.h>
-#include <WS2tcpip.h>
+#include <winsock2.h>
+#include <mswsock.h>
+#include <ws2tcpip.h>
 #pragma comment(lib, "ws2_32.lib")
 
-#include "memory.h"
+#include "Memory.h"
 
 void HandleError(const char* cause)
 {
@@ -28,7 +26,7 @@ struct Session
 {
 	SOCKET socket = INVALID_SOCKET;
 	char recvBuffer[BUFSIZE] = {};
-	int32 recvBytes = 0;
+	int32 recvBytes = 0;	
 };
 
 enum IO_TYPE
@@ -99,7 +97,7 @@ int main()
 		return 0;
 
 	cout << "Accept" << endl;
-
+	
 	// Overlapped 모델 (Completion Routine 콜백 기반)
 	// - 비동기 입출력 함수 완료되면, 쓰레드마다 있는 APC 큐에 일감이 쌓임
 	// - Alertable Wait 상태로 들어가서 APC 큐 비우기 (콜백 함수)
@@ -158,16 +156,16 @@ int main()
 		::WSARecv(clientSocket, &wsaBuf, 1, &recvLen, &flags, &overlappedEx->overlapped, NULL);
 
 		// 유저가 게임 접속 종료!
-		//Session* s = sessionManager.back();
-		//sessionManager.pop_back();
-		//xdelete(s);
-
+		Session* s = sessionManager.back();
+		sessionManager.pop_back();
+		xdelete(s);
+		
 		//::closesocket(session.socket);
 		//::WSACloseEvent(wsaEvent);
 	}
 
 	GThreadManager->Join();
-
+	
 	// 윈속 종료
 	::WSACleanup();
 }

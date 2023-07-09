@@ -1,8 +1,5 @@
 #pragma once
 
-//DummyClient, GameServer에서도 참조가 가능하게끔 CorePch를 만듬
-
-#include <iostream>
 #include "Types.h"
 #include "CoreMacro.h"
 #include "CoreTLS.h"
@@ -10,6 +7,7 @@
 #include "Container.h"
 
 #include <windows.h>
+#include <iostream>
 using namespace std;
 
 #include "Lock.h"
