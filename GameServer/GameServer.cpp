@@ -8,6 +8,7 @@
 #include "ClientPacketHandler.h"
 #include <tchar.h>
 #include "Protocol.pb.h"
+#include "Room.h"
 
 int main()
 {
@@ -32,7 +33,11 @@ int main()
 			});
 	}
 
-
+	while (true)
+	{
+		GRoom.FlushJob();
+		this_thread::sleep_for(1ms);
+	}
 
 	GThreadManager->Join();
 }
