@@ -25,6 +25,9 @@
     <Filter Include="Memory">
       <UniqueIdentifier>{156e485e-df91-4f10-8624-37e1dc9b7271}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Job">
+      <UniqueIdentifier>{59186882-7639-48d1-9b91-b824a33d40ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CSpinLock.h">
@@ -114,6 +117,15 @@
     <ClInclude Include="BufferReader.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Job.h">
+      <Filter>Job</Filter>
+    </ClInclude>
+    <ClInclude Include="JobQueue.h">
+      <Filter>Job</Filter>
+    </ClInclude>
+    <ClInclude Include="JobSerializer.h">
+      <Filter>Job</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CSpinLock.cpp">
@@ -190,6 +202,15 @@
     </ClCompile>
     <ClCompile Include="BufferWriter.cpp">
       <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="JobQueue.cpp">
+      <Filter>Job</Filter>
+    </ClCompile>
+    <ClCompile Include="Job.cpp">
+      <Filter>Job</Filter>
+    </ClCompile>
+    <ClCompile Include="JobSerializer.cpp">
+      <Filter>Job</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
