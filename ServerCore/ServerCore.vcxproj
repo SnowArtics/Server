@@ -168,6 +168,7 @@
     <ClInclude Include="CSleep.h" />
     <ClInclude Include="CSpinLock.h" />
     <ClInclude Include="DeadLockProfiler.h" />
+    <ClInclude Include="GlobalQueue.h" />
     <ClInclude Include="IocpCore.h" />
     <ClInclude Include="IocpEvent.h" />
     <ClInclude Include="Job.h" />
@@ -200,6 +201,7 @@
     <ClCompile Include="CSleep.cpp" />
     <ClCompile Include="CSpinLock.cpp" />
     <ClCompile Include="DeadLockProfiler.cpp" />
+    <ClCompile Include="GlobalQueue.cpp" />
     <ClCompile Include="IocpCore.cpp" />
     <ClCompile Include="IocpEvent.cpp" />
     <ClCompile Include="Job.cpp" />
