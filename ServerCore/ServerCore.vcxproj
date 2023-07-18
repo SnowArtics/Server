@@ -172,9 +172,9 @@
     <ClInclude Include="IocpEvent.h" />
     <ClInclude Include="Job.h" />
     <ClInclude Include="JobQueue.h" />
-    <ClInclude Include="JobSerializer.h" />
     <ClInclude Include="Listener.h" />
     <ClInclude Include="Lock.h" />
+    <ClInclude Include="LockQueue.h" />
     <ClInclude Include="Memory.h" />
     <ClInclude Include="MemoryPool.h" />
     <ClInclude Include="NetAddress.h" />
@@ -204,11 +204,11 @@
     <ClCompile Include="IocpEvent.cpp" />
     <ClCompile Include="Job.cpp" />
     <ClCompile Include="JobQueue.cpp" />
-    <ClCompile Include="JobSerializer.cpp" />
     <ClCompile Include="Listener.cpp" />
     <ClCompile Include="Lock.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="LockQueue.cpp" />
     <ClCompile Include="Memory.cpp" />
     <ClCompile Include="MemoryPool.cpp" />
     <ClCompile Include="NetAddress.cpp" />
