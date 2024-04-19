@@ -167,8 +167,6 @@
     <ClInclude Include="CoreTLS.h" />
     <ClInclude Include="CSleep.h" />
     <ClInclude Include="CSpinLock.h" />
-    <ClInclude Include="DBConnection.h" />
-    <ClInclude Include="DBConnectionPool.h" />
     <ClInclude Include="DeadLockProfiler.h" />
     <ClInclude Include="GlobalQueue.h" />
     <ClInclude Include="IocpCore.h" />
@@ -203,8 +201,6 @@
     <ClCompile Include="CoreTLS.cpp" />
     <ClCompile Include="CSleep.cpp" />
     <ClCompile Include="CSpinLock.cpp" />
-    <ClCompile Include="DBConnection.cpp" />
-    <ClCompile Include="DBConnectionPool.cpp" />
     <ClCompile Include="DeadLockProfiler.cpp" />
     <ClCompile Include="GlobalQueue.cpp" />
     <ClCompile Include="IocpCore.cpp" />
