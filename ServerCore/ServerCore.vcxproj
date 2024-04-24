@@ -165,6 +165,7 @@
     <ClInclude Include="CoreMacro.h" />
     <ClInclude Include="CorePch.h" />
     <ClInclude Include="CoreTLS.h" />
+    <ClInclude Include="CSingleton.h" />
     <ClInclude Include="CSleep.h" />
     <ClInclude Include="CSpinLock.h" />
     <ClInclude Include="DeadLockProfiler.h" />

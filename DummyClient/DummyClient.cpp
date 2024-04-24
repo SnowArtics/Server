@@ -4,6 +4,7 @@
 #include "Session.h"
 #include "BufferReader.h"
 #include "ServerPacketHandler.h"
+#include "ChatSystem.h"
 
 char sendData[] = "Hello World";
 
@@ -56,7 +57,7 @@ int main()
 
 	ASSERT_CRASH(service->Start());
 
-	for (int32 i = 0; i < 2; i++)
+	for (int32 i = 0; i < 1; i++)
 	{
 		GThreadManager->Launch([=]()
 			{
@@ -67,13 +68,15 @@ int main()
 			});
 	}
 
+	ChatSystem::GetInst()->SetClientService(service);
+
 	Protocol::C_CHAT chatPkt;
 	chatPkt.set_msg(u8"Hello World !");
 	auto sendBuffer = ServerPacketHandler::MakeSendBuffer(chatPkt);
 
 	while (true)
 	{
-		service->Broadcast(sendBuffer);
+		ChatSystem::GetInst()->Broadcast(sendBuffer);
 		this_thread::sleep_for(1s);
 	}
 

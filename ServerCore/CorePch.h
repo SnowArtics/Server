@@ -15,6 +15,7 @@ using namespace std;
 #include <ws2tcpip.h>
 #pragma comment(lib, "ws2_32.lib")
 
+#include "CSingleton.h"
 #include "Lock.h"
 #include "ObjectPool.h"
 #include "TypeCast.h"
