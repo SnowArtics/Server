@@ -71,13 +71,16 @@ int main()
 	ChatSystem::GetInst()->SetClientService(service);
 
 	Protocol::C_CHAT chatPkt;
-	chatPkt.set_msg(u8"Hello World !");
-	auto sendBuffer = ServerPacketHandler::MakeSendBuffer(chatPkt);
+
+	system("chcp 65001");
 
 	while (true)
 	{
+		string s;
+		getline(cin, s);
+		chatPkt.set_msg(s);
+		auto sendBuffer = ServerPacketHandler::MakeSendBuffer(chatPkt);
 		ChatSystem::GetInst()->Broadcast(sendBuffer);
-		this_thread::sleep_for(1s);
 	}
 
 	GThreadManager->Join();
