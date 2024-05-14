@@ -86,13 +86,16 @@ bool Handle_C_ENTER_GAME(PacketSessionRef& session, Protocol::C_ENTER_GAME& pkt)
 
 bool Handle_C_CHAT(PacketSessionRef& session, Protocol::C_CHAT& pkt)
 {
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
 	std::cout << pkt.msg() << endl;
 
 	Protocol::S_CHAT chatPkt;
 	chatPkt.set_msg(pkt.msg());
 	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(chatPkt);
 
-	GRoom->DoAsync(&Room::Broadcast, sendBuffer);
+	PlayerRef player = gameSession->_currentPlayer;
+	GRoom->DoAsync(&Room::Broadcast, sendBuffer, player);
 
 	return true;
 }

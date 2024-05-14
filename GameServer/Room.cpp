@@ -15,10 +15,11 @@ void Room::Leave(PlayerRef player)
 	_players.erase(player->playerId);
 }
 
-void Room::Broadcast(SendBufferRef sendBuffer)
+void Room::Broadcast(SendBufferRef sendBuffer, PlayerRef player)
 {
 	for (auto& p : _players)
 	{
-		p.second->ownerSession->Send(sendBuffer);
+		if (player != nullptr && player->playerId != p.second->playerId)
+			p.second->ownerSession->Send(sendBuffer);
 	}
 }
